@@ -3460,17 +3460,7 @@
 			</button>
 
 			<button style="main_button">
-				<condition var1="tw_allow_partition_sdcard" var2="1"/>
 				<placement x="%indent%" y="%row8_y%"/>
-				<text>{@part_sd_btn=Partition SD Card}</text>
-				<actions>
-					<action function="set">partitionlisterror=0</action>
-					<action function="page">partsdcardsel</action>
-				</actions>
-			</button>
-
-			<button style="main_button">
-				<placement x="%center_x%" y="%row8_y%"/>
 				<text>{@file_manager_btn=File Manager}</text>
 				<action function="page">filemanagerlist</action>
 			</button>
@@ -3482,7 +3472,7 @@
 			</button>
 
 			<button style="main_button">
-				<placement x="%center_x%" y="%row13a_y%"/>
+				<placement x="%center_x%" y="%row8_y%"/>
 				<text>{@reload_theme_btn=Reload Theme}</text>
 				<action function="reload"/>
 			</button>
@@ -3491,13 +3481,6 @@
 				<placement x="%indent%" y="%row19_y%"/>
 				<text>{@adb_sideload_btn=ADB Sideload}</text>
 				<action function="page">sideload</action>
-			</button>
-
-			<button style="main_button">
-				<condition var1="tw_show_dumlock" var2="1"/>
-				<placement x="%center_x%" y="%row19_y%"/>
-				<text>{@dumlock_btn=HTC Dumlock}</text>
-				<action function="page">htcdumlock</action>
 			</button>
 
 			<button style="main_button">
@@ -3569,228 +3552,6 @@
 			<action>
 				<touch key="back"/>
 				<action function="page">advanced</action>
-			</action>
-		</page>
-
-		<page name="partsdcardcheck">
-			<action>
-				<condition var1="tw_partition_removable" op="=" var2="1"/>
-				<actions>
-					<action function="set">partitionlisterror=0</action>
-					<action function="page">partsdcard</action>
-				</actions>
-			</action>
-
-			<action>
-				<condition var1="tw_partition_removable" op="!=" var2="1"/>
-				<actions>
-					<action function="set">partitionlisterror=1</action>
-					<action function="page">partsdcardsel</action>
-				</actions>
-			</action>
-		</page>
-
-		<page name="partsdcard">
-			<template name="page"/>
-
-			<text style="text_l">
-				<placement x="%col1_x_header%" y="%row3_header_y%"/>
-				<text>{@advanced_hdr=Advanced}</text>
-			</text>
-
-			<text style="text_m">
-				<placement x="%col1_x_header%" y="%row4_header_y%"/>
-				<text>{@part_sd_hdr=Partition SD Card}</text>
-			</text>
-
-			<text style="text_m_fail">
-				<placement x="%center_x%" y="%row2_y%" placement="5"/>
-				<text>{@part_sd_lose=You will lose all files on your SD card!}</text>
-			</text>
-
-			<text style="text_m_fail">
-				<placement x="%center_x%" y="%row3_y%" placement="5"/>
-				<text>{@part_sd_undo=This action cannot be undone!}</text>
-			</text>
-
-			<text style="text_m_accent">
-				<placement x="%center_x%" y="%row5_y%" placement="5"/>
-				<text>{@part_sd_ext_sz=EXT Size:}</text>
-			</text>
-
-			<text style="text_m">
-				<placement x="%center_x%" y="%row6a_y%" placement="5"/>
-				<text>%tw_sdext_size%</text>
-			</text>
-
-			<button style="button_quarter_width">
-				<placement x="%indent%" y="%row6_y%"/>
-				<text>{@part_sd_m=-}</text>
-				<action function="addsubtract">tw_sdext_size-256</action>
-			</button>
-
-			<button style="button_quarter_width">
-				<placement x="%btn4_col4_x%" y="%row6_y%"/>
-				<text>{@part_sd_p=+}</text>
-				<action function="addsubtract">tw_sdext_size+256</action>
-			</button>
-
-			<text style="text_m_accent">
-				<placement x="%center_x%" y="%row9_y%" placement="5"/>
-				<text>{@part_sd_swap_sz=Swap Size:}</text>
-			</text>
-
-			<text style="text_m">
-				<placement x="%center_x%" y="%row10a_y%" placement="5"/>
-				<text>%tw_swap_size%</text>
-			</text>
-
-			<button style="button_quarter_width">
-				<placement x="%indent%" y="%row10_y%"/>
-				<text>{@part_sd_m=-}</text>
-				<action function="addsubtract">tw_swap_size-64</action>
-			</button>
-
-			<button style="button_quarter_width">
-				<placement x="%btn4_col4_x%" y="%row10_y%"/>
-				<text>{@part_sd_p=+}</text>
-				<action function="addsubtract">tw_swap_size+64</action>
-			</button>
-
-			<text style="text_m_accent">
-				<placement x="%center_x%" y="%row13_y%" placement="5"/>
-				<text>{@file_system=File System:}</text>
-			</text>
-
-			<text style="text_m">
-				<placement x="%center_x%" y="%row14a_y%" placement="5"/>
-				<text>%tw_sdpart_file_system%</text>
-			</text>
-
-			<button style="button_quarter_width">
-				<placement x="%indent%" y="%row14_y%"/>
-				<text>EXT3</text>
-				<action function="set">tw_sdpart_file_system=ext3</action>
-			</button>
-
-			<button style="button_quarter_width">
-				<placement x="%btn4_col4_x%" y="%row14_y%"/>
-				<text>EXT4</text>
-				<action function="set">tw_sdpart_file_system=ext4</action>
-			</button>
-
-			<slider>
-				<text>{@swipe_part_sd=Swipe to Partition}</text>
-				<action function="page">partsdcardaction</action>
-				<actions>
-					<action function="set">tw_back=partsdcard</action>
-					<action function="set">tw_action=partitionsd</action>
-					<action function="set">tw_has_action2=1</action>
-					<action function="set">tw_action2=set</action>
-					<action function="set">tw_action2_param=tw_zip_location=/sdcard</action>
-					<action function="set">tw_action_text1={@partitioning_sd=Partitioning SD Card...}</action>
-					<action function="set">tw_action_text2={@partitioning_sd2=This will take a few minutes.}</action>
-					<action function="set">tw_complete_text1={@part_sd_complete=Partitioning Complete}</action>
-					<action function="page">action_page</action>
-				</actions>
-			</slider>
-
-			<action>
-				<touch key="home"/>
-				<action function="page">main</action>
-			</action>
-
-			<action>
-				<touch key="back"/>
-				<actions>
-					<action function="set">partitionlisterror=0</action>
-					<action function="page">partsdcardsel</action>
-				</actions>
-			</action>
-		</page>
-
-		<page name="htcdumlock">
-			<template name="page"/>
-
-			<text style="text_l">
-				<placement x="%col1_x_header%" y="%row3_header_y%"/>
-				<text>{@advanced_hdr=Advanced}</text>
-			</text>
-
-			<text style="text_m">
-				<placement x="%col1_x_header%" y="%row4_header_y%"/>
-				<text>{@dumlock_hdr=HTC Dumlock}</text>
-			</text>
-
-			<button style="main_button_half_height_full_width">
-				<placement x="%indent%" y="%row15a_y%"/>
-				<text>{@dumlock_restore_btn=Restore Original Boot}</text>
-				<actions>
-					<action function="set">tw_back=htcdumlock</action>
-					<action function="set">tw_action=htcdumlockrestoreboot</action>
-					<action function="set">tw_text1={@dumlock_restore_confirm=Restore original boot image?}</action>
-					<action function="set">tw_action_text1={@dumlock_restoring=Restoring Original Boot...}</action>
-					<action function="set">tw_complete_text1={@dumlock_restore_complete=Restore Original Boot Complete}</action>
-					<action function="set">tw_slider_text={@swipe_to_confirm=Swipe to Confirm}</action>
-					<action function="page">confirm_action</action>
-				</actions>
-			</button>
-
-			<button style="main_button_half_height_full_width">
-				<placement x="%indent%" y="%row18a_y%"/>
-				<text>{@dumlock_reflash_btn=Reflash Recovery}</text>
-				<actions>
-					<action function="set">tw_back=htcdumlock</action>
-					<action function="set">tw_action=htcdumlockreflashrecovery</action>
-					<action function="set">tw_text1={@dumlock_reflash_confirm=Reflash recovery to boot?}</action>
-					<action function="set">tw_action_text1={@dumlock_reflashing=Flashing recovery to boot...}</action>
-					<action function="set">tw_complete_text1={@dumlock_reflash_complete=Recovery Flash to Boot Complete}</action>
-					<action function="set">tw_slider_text={@swipe_to_confirm=Swipe to Confirm}</action>
-					<action function="page">confirm_action</action>
-				</actions>
-			</button>
-
-			<button style="main_button_half_height_full_width">
-				<placement x="%indent%" y="%row21a_y%"/>
-				<text>{@dumlock_install_btn=Install HTC Dumlock}</text>
-				<actions>
-					<action function="set">tw_back=htcdumlock</action>
-					<action function="set">tw_action=installhtcdumlock</action>
-					<action function="set">tw_text1={@dumlock_install_confirm=Install HTC dumlock files to ROM?}</action>
-					<action function="set">tw_action_text1={@dumlock_installing=Installing HTC Dumlock...}</action>
-					<action function="set">tw_complete_text1={@dumlock_install_complete=HTC Dumlock Install Complete}</action>
-					<action function="set">tw_slider_text={@swipe_to_confirm=Swipe to Confirm}</action>
-					<action function="page">confirm_action</action>
-				</actions>
-			</button>
-
-			<action>
-				<touch key="home"/>
-				<action function="page">main</action>
-			</action>
-
-			<action>
-				<touch key="back"/>
-				<action function="page">advanced</action>
-			</action>
-		</page>
-
-		<page name="lock">
-			<background color="%semi_transparent%"/>
-
-			<image>
-				<image resource="unlock_icon"/>
-				<placement x="%center_x%" y="%row10_y%" placement="4"/>
-			</image>
-
-			<slider>
-				<text>{@swipe_to_unlock=Swipe to Unlock}</text>
-				<action function="overlay"/>
-			</slider>
-
-			<action>
-				<touch key="power"/>
-				<action function="togglebacklight"/>
 			</action>
 		</page>
 
